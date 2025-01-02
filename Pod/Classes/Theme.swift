@@ -130,41 +130,37 @@ open class Theme {
     }
 
     internal func applyStyleToString(_ string: String, styleList: [String]) -> NSAttributedString {
-        print("Applying styles: \(styleList) to string: \(string)")
+        let returnString : NSAttributedString
 
         if styleList.count > 0 {
             var attrs = [AttributedStringKey: Any]()
             attrs[.font] = codeFont
-
             for style in styleList {
                 var style = style
-                print("Processing style: \(style)")
 
-                // Handle compound styles
-                if styleList.contains("hljs-title") && styleList.contains("hljs-function") {
+                if styleList.contains("hljs-title") && styleList.contains("hljs-function") && themeDict["hljs-function-hljs-title"] != nil {
                     style = "hljs-function-hljs-title"
-                    print("Combined style to: \(style)")
                 }
-                if styleList.contains("hljs-title") && styleList.contains("hljs-class") {
+
+                if styleList.contains("hljs-title") && styleList.contains("hljs-class") && themeDict["hljs-class-hljs-title"] != nil {
                     style = "hljs-class-hljs-title"
-                    print("Combined style to: \(style)")
                 }
+
+                style = style.replacingOccurrences(of: " ", with: "-")
 
                 if let themeStyle = themeDict[style] as? [AttributedStringKey: Any] {
-                    print("Found theme style: \(themeStyle)")
                     for (attrName, attrValue) in themeStyle {
                         attrs.updateValue(attrValue, forKey: attrName)
                     }
-                } else {
-                    print("No theme style found for: \(style)")
                 }
             }
 
-            print("Final attributes: \(attrs)")
-            return NSAttributedString(string: string, attributes: attrs)
+            returnString = NSAttributedString(string: string, attributes: attrs)
+        } else {
+            returnString = NSAttributedString(string: string, attributes:[AttributedStringKey.font:codeFont as Any])
         }
 
-        return NSAttributedString(string: string, attributes: [.font: codeFont as Any])
+        return returnString
     }
 
     private func stripTheme(_ themeString : String) -> [String:[String:String]] {
@@ -199,7 +195,8 @@ open class Theme {
             let keyArray = keys.components(separatedBy: ",")
             let cleanKeyArray = keyArray.map { key -> String in
                 let cleaned = key.trimmingCharacters(in: .whitespaces)
-                return cleaned.hasPrefix(".") ? String(cleaned.dropFirst()) : cleaned
+                let withoutDot = cleaned.hasPrefix(".") ? String(cleaned.dropFirst()) : cleaned
+                return withoutDot.replacingOccurrences(of: ".", with: "-")
             }
 
             for var key in cleanKeyArray {
@@ -222,6 +219,7 @@ open class Theme {
 
         return returnDict
     }
+
 
     private func strippedThemeToString(_ theme: RPThemeStringDict) -> String
     {
