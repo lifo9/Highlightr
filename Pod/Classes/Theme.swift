@@ -129,43 +129,42 @@ open class Theme {
         }
     }
 
-    internal func applyStyleToString(_ string: String, styleList: [String]) -> NSAttributedString
-    {
-        let returnString : NSAttributedString
+    internal func applyStyleToString(_ string: String, styleList: [String]) -> NSAttributedString {
+        print("Applying styles: \(styleList) to string: \(string)")
 
-        if styleList.count > 0
-        {
+        if styleList.count > 0 {
             var attrs = [AttributedStringKey: Any]()
             attrs[.font] = codeFont
-            for style in styleList
-            {
+
+            for style in styleList {
                 var style = style
+                print("Processing style: \(style)")
 
-                if styleList.contains("hljs-title") && styleList.contains("hljs-function") && themeDict["hljs-function-hljs-title"] != nil {
+                // Handle compound styles
+                if styleList.contains("hljs-title") && styleList.contains("hljs-function") {
                     style = "hljs-function-hljs-title"
+                    print("Combined style to: \(style)")
                 }
-
-                if styleList.contains("hljs-title") && styleList.contains("hljs-class") && themeDict["hljs-class-hljs-title"] != nil {
+                if styleList.contains("hljs-title") && styleList.contains("hljs-class") {
                     style = "hljs-class-hljs-title"
+                    print("Combined style to: \(style)")
                 }
 
-                if let themeStyle = themeDict[style] as? [AttributedStringKey: Any]
-                {
-                    for (attrName, attrValue) in themeStyle
-                    {
+                if let themeStyle = themeDict[style] as? [AttributedStringKey: Any] {
+                    print("Found theme style: \(themeStyle)")
+                    for (attrName, attrValue) in themeStyle {
                         attrs.updateValue(attrValue, forKey: attrName)
                     }
+                } else {
+                    print("No theme style found for: \(style)")
                 }
             }
 
-            returnString = NSAttributedString(string: string, attributes:attrs )
-        }
-        else
-        {
-			returnString = NSAttributedString(string: string, attributes:[AttributedStringKey.font:codeFont as Any] )
+            print("Final attributes: \(attrs)")
+            return NSAttributedString(string: string, attributes: attrs)
         }
 
-        return returnString
+        return NSAttributedString(string: string, attributes: [.font: codeFont as Any])
     }
 
     private func stripTheme(_ themeString : String) -> [String:[String:String]] {
