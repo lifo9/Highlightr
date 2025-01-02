@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B1894922D26E3A000DF0796 /* github-dark.min.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "github-dark.min.css"; path = "Pod/Assets/styles/github-dark.min.css"; sourceTree = SOURCE_ROOT; };
+		3B1894922D26E3A000DF0796 /* github-dark.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "github-dark.min.css"; path = "Pod/Assets/styles/github-dark.min.css"; sourceTree = SOURCE_ROOT; };
 		5662696220D94F9F00BEEE01 /* Shims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Shims.swift; path = Pod/Classes/Shims.swift; sourceTree = SOURCE_ROOT; };
 		8C2FB1C21F39118F00469D0D /* Highlightr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Highlightr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C2FB1C51F39118F00469D0D /* Highlightr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Highlightr.h; sourceTree = "<group>"; };
