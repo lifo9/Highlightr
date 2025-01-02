@@ -69,7 +69,7 @@ open class Highlightr
 
         self.hljs = hljs
         
-        guard setTheme(to: "pojoaque") else
+        guard setTheme(to: "github") else
         {
             return nil
         }
