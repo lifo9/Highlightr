@@ -56,10 +56,10 @@ open class Theme {
         strippedTheme = stripTheme(themeString)
         lightTheme = strippedThemeToString(strippedTheme)
         themeDict = strippedThemeToTheme(strippedTheme)
-        var bkgColorHex = strippedTheme[".hljs"]?["background"]
+        var bkgColorHex = strippedTheme["hljs"]?["background"]
         if(bkgColorHex == nil)
         {
-            bkgColorHex = strippedTheme[".hljs"]?["background-color"]
+            bkgColorHex = strippedTheme["hljs"]?["background-color"]
         }
         if let bkgColorHex = bkgColorHex
         {
